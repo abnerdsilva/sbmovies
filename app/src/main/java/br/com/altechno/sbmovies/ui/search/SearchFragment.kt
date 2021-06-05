@@ -1,6 +1,8 @@
 package br.com.altechno.sbmovies.ui.search
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +10,16 @@ import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import br.com.altechno.sbmovies.R
 import br.com.altechno.sbmovies.model.MovieSearch
 import br.com.mrstecno.mymoviesimdb_test.adapters.MoviesGridAdapter
 
 class SearchFragment : Fragment() {
+
+    private var waitingTime: Long = 500
+    private var countDownTimer: CountDownTimer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +36,37 @@ class SearchFragment : Fragment() {
         val searchButton: SearchView = view.findViewById(R.id.searchView)
 
         searchButton.onActionViewExpanded()
+        searchButton.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(text: String): Boolean {
+                if (text.isNotEmpty()) {
+                    Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+                }
+
+                return true
+            }
+
+            override fun onQueryTextChange(text: String): Boolean {
+                if (countDownTimer != null) {
+                    countDownTimer!!.cancel()
+                }
+                countDownTimer = object : CountDownTimer(waitingTime, 500) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        Log.d("TIME", "seconds remaining ($millisUntilFinished): " + millisUntilFinished / 1000)
+                    }
+
+                    override fun onFinish() {
+                        Log.d("FINISHED", "DONE $text")
+                        if (text.isNotEmpty()) {
+                            Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                countDownTimer!!.start()
+
+                return false
+            }
+        })
+
 
         backButton.setOnClickListener {
             findNavController().navigateUp()
