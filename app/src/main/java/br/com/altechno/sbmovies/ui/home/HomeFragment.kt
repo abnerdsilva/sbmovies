@@ -47,8 +47,11 @@ class HomeFragment : Fragment() {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_movies)!!
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MoviesAdapter(movies) {
-            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment)
+        recyclerView.adapter = MoviesAdapter(movies) { mv ->
+            val args = Bundle()
+            args.putParcelable("movie", mv)
+
+            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
         }
     }
 
@@ -56,8 +59,11 @@ class HomeFragment : Fragment() {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_channels)!!
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MoviesAdapter(movies.sortedBy { it.title }) {
-            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment)
+        recyclerView.adapter = MoviesAdapter(movies.sortedBy { it.title }) { mv ->
+            val args = Bundle()
+            args.putParcelable("movie", mv)
+
+            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
         }
     }
 
@@ -69,7 +75,8 @@ class HomeFragment : Fragment() {
             type = "",
             year = ""
         ),
-        MovieSearch(title = "Star Wars",
+        MovieSearch(
+            title = "Star Wars",
             poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
             imdbID = "",
             type = "",
@@ -82,7 +89,8 @@ class HomeFragment : Fragment() {
             type = "",
             year = ""
         ),
-        MovieSearch(title = "Birds",
+        MovieSearch(
+            title = "Birds",
             poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
             imdbID = "",
             type = "",
