@@ -78,8 +78,11 @@ class SearchFragment : Fragment() {
     private fun setupRecyclerViewMovies() {
         val gridView: GridView = view?.findViewById(R.id.grid_view_movies)!!
 
-        gridView.adapter = MoviesGridAdapter(movies, requireContext()) {
-            this.findNavController().navigate(R.id.action_searchFragment_to_detailsFragment)
+        gridView.adapter = MoviesGridAdapter(movies, requireContext()) { mv ->
+            val args = Bundle()
+            args.putParcelable("movie", mv)
+
+            this.findNavController().navigate(R.id.action_searchFragment_to_detailsFragment, args)
         }
     }
 
