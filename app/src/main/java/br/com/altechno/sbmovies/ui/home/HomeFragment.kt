@@ -1,4 +1,4 @@
-package br.com.altechno.sbmovies.ui
+package br.com.altechno.sbmovies.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.altechno.sbmovies.R
@@ -40,14 +41,18 @@ class HomeFragment : Fragment() {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_movies)!!
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MoviesAdapter(movies) {}
+        recyclerView.adapter = MoviesAdapter(movies) {
+            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment)
+        }
     }
 
     private fun setupRecyclerViewChannels() {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_channels)!!
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MoviesAdapter(movies.sortedBy { it.title }) {}
+        recyclerView.adapter = MoviesAdapter(movies.sortedBy { it.title }) {
+            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment)
+        }
     }
 
     private val movies = listOf(
