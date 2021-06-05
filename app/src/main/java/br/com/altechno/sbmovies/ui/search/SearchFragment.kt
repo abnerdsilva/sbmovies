@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.ImageView
+import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import br.com.altechno.sbmovies.R
 import br.com.altechno.sbmovies.model.MovieSearch
@@ -26,6 +27,9 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val backButton: ImageView = view.findViewById(R.id.back_button)
+        val searchButton: SearchView = view.findViewById(R.id.searchView)
+
+        searchButton.onActionViewExpanded()
 
         backButton.setOnClickListener {
             findNavController().navigateUp()
