@@ -33,6 +33,12 @@ class HomeFragment : Fragment() {
             .load(movies.random().poster)
             .into(imgSlider)
 
+        val btnSearch = view.findViewById<ImageView>(R.id.img_search)
+
+        btnSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
+
         setupRecyclerViewMovies()
         setupRecyclerViewChannels()
     }
