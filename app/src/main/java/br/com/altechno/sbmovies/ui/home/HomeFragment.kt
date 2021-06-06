@@ -1,29 +1,29 @@
 package br.com.altechno.sbmovies.ui.home
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.altechno.sbmovies.R
 import br.com.altechno.sbmovies.adapters.MoviesAdapter
-import br.com.altechno.sbmovies.model.MovieSearch
+import br.com.altechno.sbmovies.utils.movies
 import com.bumptech.glide.Glide
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
+    private val homeViewModel: HomeViewModel by viewModels()
+
+    private lateinit var dialog: Dialog
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val imgSlider = view.findViewById<ImageView>(R.id.img_slider)
-
-        Glide.with(view)
-            .load(movies.random().poster)
-            .into(imgSlider)
 
         val btnSearch = view.findViewById<ImageView>(R.id.img_search)
 
@@ -33,6 +33,36 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         setupRecyclerViewMovies()
         setupRecyclerViewChannels()
+
+        observerViewModels()
+
+        if (movies.isEmpty()) {
+            homeViewModel.findMoviesSample("rambo")
+        }
+    }
+
+    private fun observerViewModels() {
+        homeViewModel.moviesLiveData.observe(viewLifecycleOwner, { mvs ->
+            movies = mvs
+
+            val imgSlider = view?.findViewById<ImageView>(R.id.img_slider)
+
+            Glide.with(requireView())
+                .load(mvs.random().Poster)
+                .into(imgSlider!!)
+
+
+            setupRecyclerViewMovies()
+            setupRecyclerViewChannels()
+        })
+
+        homeViewModel.getIsLoading().observeForever { status ->
+            showLoading(status)
+        }
+
+        homeViewModel.getMessage().observeForever { message ->
+            showMessageAlert(message)
+        }
     }
 
     private fun setupRecyclerViewMovies() {
@@ -59,34 +89,33 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private val movies = listOf(
-        MovieSearch(
-            title = "Person",
-            poster = "https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg",
-            imdbID = "",
-            type = "",
-            year = ""
-        ),
-        MovieSearch(
-            title = "Star Wars",
-            poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-            imdbID = "",
-            type = "",
-            year = ""
-        ),
-        MovieSearch(
-            title = "Butterfly",
-            poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
-            imdbID = "",
-            type = "",
-            year = ""
-        ),
-        MovieSearch(
-            title = "Birds",
-            poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
-            imdbID = "",
-            type = "",
-            year = ""
-        )
-    )
+    fun showLoading(statusLoading: Boolean) {
+        if (statusLoading) {
+            dialog = Dialog(requireContext())
+            println("----------------------- ${dialog.isShowing}")
+            if (!dialog.isShowing) {
+                dialog.setContentView(R.layout.loading)
+                dialog.window!!.setLayout(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                dialog.show()
+            }
+        } else {
+            println("////////////////////// ${dialog.isShowing}")
+            if (dialog.isShowing) {
+                dialog.dismiss()
+            }
+
+        }
+    }
+
+    private fun showMessageAlert(msg: String) {
+        if (msg != "") {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Androidly Alert")
+            builder.setMessage("We have a message")
+            builder.show()
+        }
+    }
 }
