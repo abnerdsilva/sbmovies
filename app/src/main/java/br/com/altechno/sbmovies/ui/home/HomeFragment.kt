@@ -51,7 +51,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_channels)!!
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MoviesAdapter(movies.sortedBy { it.title }) { mv ->
+        recyclerView.adapter = MoviesAdapter(movies.sortedBy { it.Title }) { mv ->
             val args = Bundle()
             args.putParcelable("movie", mv)
 

@@ -88,74 +88,74 @@ class SearchFragment : Fragment() {
 
     private val movies = listOf(
         MovieSearch(
-            title = "Person",
-            poster = "https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg",
+            Title = "Person",
+            Poster = "https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         ),
         MovieSearch(
-            title = "Star Wars",
-            poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+            Title = "Star Wars",
+            Poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         ),
         MovieSearch(
-            title = "Butterfly",
-            poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
+            Title = "Butterfly",
+            Poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         ),
         MovieSearch(
-            title = "Birds",
-            poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
+            Title = "Birds",
+            Poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         ),
         MovieSearch(
-            title = "Star Wars",
-            poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+            Title = "Star Wars",
+            Poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         ),
         MovieSearch(
-            title = "Butterfly",
-            poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
+            Title = "Butterfly",
+            Poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         ),
         MovieSearch(
-            title = "Birds",
-            poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
+            Title = "Birds",
+            Poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         ),
         MovieSearch(
-            title = "Star Wars",
-            poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+            Title = "Star Wars",
+            Poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         ),
         MovieSearch(
-            title = "Butterfly",
-            poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
+            Title = "Butterfly",
+            Poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         ),
         MovieSearch(
-            title = "Birds",
-            poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
+            Title = "Birds",
+            Poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
             imdbID = "",
-            type = "",
-            year = ""
+            Type = "",
+            Year = ""
         )
     )
 }

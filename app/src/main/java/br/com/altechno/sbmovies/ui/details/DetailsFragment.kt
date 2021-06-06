@@ -31,12 +31,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         val txtYear = view.findViewById<TextView>(R.id.txt_details_year)
         val txtNoteImdb = view.findViewById<TextView>(R.id.txt_details_note_imdb)
 
-        txtTitle.text = movieSearch.title
-        txtYear.text = movieSearch.year
+        txtTitle.text = movieSearch.Title
+        txtYear.text = movieSearch.Year
         txtNoteImdb.text = movieSearch.imdbID
 
         Glide.with(view)
-            .load(movieSearch.poster)
+            .load(movieSearch.Poster)
             .centerInside()
             .into(poster)
 

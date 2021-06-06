@@ -31,7 +31,7 @@ class MoviesAdapter(
         val movie = movies[position]
 
         Glide.with(holder.itemView)
-            .load(movie.poster)
+            .load(movie.Poster)
             .placeholder(R.drawable.ic_launcher_foreground)
             .centerCrop()
             .into(holder.image)

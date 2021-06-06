@@ -4,11 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class MovieSearch(
-    val title: String?,
-    val year: String?,
+    val Title: String?,
+    val Year: String?,
     val imdbID: String?,
-    val type: String?,
-    val poster: String?,
+    val Type: String?,
+    val Poster: String?,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -20,11 +20,11 @@ class MovieSearch(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(title)
-        parcel.writeString(year)
+        parcel.writeString(Title)
+        parcel.writeString(Year)
         parcel.writeString(imdbID)
-        parcel.writeString(type)
-        parcel.writeString(poster)
+        parcel.writeString(Type)
+        parcel.writeString(Poster)
     }
 
     override fun describeContents(): Int {
