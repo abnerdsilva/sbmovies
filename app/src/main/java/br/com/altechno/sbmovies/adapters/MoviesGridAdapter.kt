@@ -41,7 +41,7 @@ class MoviesGridAdapter(
         val img = tview?.findViewById<ImageView>(R.id.img_movie)
 
         Glide.with(tview!!)
-            .load(movie.poster)
+            .load(movie.Poster)
             .placeholder(R.drawable.ic_launcher_foreground)
             .centerCrop()
             .into(img!!)
