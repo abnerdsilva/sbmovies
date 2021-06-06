@@ -3,7 +3,6 @@ package br.com.altechno.sbmovies.ui.search
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,10 @@ import android.widget.GridView
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.altechno.sbmovies.R
-import br.com.altechno.sbmovies.model.MovieSearch
+import br.com.altechno.sbmovies.utils.movies
 import br.com.mrstecno.mymoviesimdb_test.adapters.MoviesGridAdapter
 
 class SearchFragment : Fragment() {
@@ -85,77 +85,4 @@ class SearchFragment : Fragment() {
             this.findNavController().navigate(R.id.action_searchFragment_to_detailsFragment, args)
         }
     }
-
-    private val movies = listOf(
-        MovieSearch(
-            Title = "Person",
-            Poster = "https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        ),
-        MovieSearch(
-            Title = "Star Wars",
-            Poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        ),
-        MovieSearch(
-            Title = "Butterfly",
-            Poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        ),
-        MovieSearch(
-            Title = "Birds",
-            Poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        ),
-        MovieSearch(
-            Title = "Star Wars",
-            Poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        ),
-        MovieSearch(
-            Title = "Butterfly",
-            Poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        ),
-        MovieSearch(
-            Title = "Birds",
-            Poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        ),
-        MovieSearch(
-            Title = "Star Wars",
-            Poster = "https://miro.medium.com/max/1838/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        ),
-        MovieSearch(
-            Title = "Butterfly",
-            Poster = "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        ),
-        MovieSearch(
-            Title = "Birds",
-            Poster = "https://ep00.epimg.net/verne/imagenes/2019/11/13/album/1573641411_551713_1573641467_album_normal.jpg",
-            imdbID = "",
-            Type = "",
-            Year = ""
-        )
-    )
 }
