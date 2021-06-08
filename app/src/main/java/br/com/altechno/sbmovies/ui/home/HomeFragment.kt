@@ -89,10 +89,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    fun showLoading(statusLoading: Boolean) {
+    private fun showLoading(statusLoading: Boolean) {
         if (statusLoading) {
             dialog = Dialog(requireContext())
-            println("----------------------- ${dialog.isShowing}")
             if (!dialog.isShowing) {
                 dialog.setContentView(R.layout.loading)
                 dialog.window!!.setLayout(
@@ -102,7 +101,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 dialog.show()
             }
         } else {
-            println("////////////////////// ${dialog.isShowing}")
             if (dialog.isShowing) {
                 dialog.dismiss()
             }
@@ -113,9 +111,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun showMessageAlert(msg: String) {
         if (msg != "") {
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Androidly Alert")
-            builder.setMessage("We have a message")
-            builder.show()
+            builder.setMessage(msg)
+            val dlg = builder.create()
+            dlg.show()
         }
     }
 }

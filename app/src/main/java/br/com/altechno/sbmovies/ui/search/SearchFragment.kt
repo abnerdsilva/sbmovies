@@ -1,33 +1,32 @@
 package br.com.altechno.sbmovies.ui.search
 
+import android.app.Dialog
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.SearchView
-import android.widget.Toast
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import br.com.altechno.sbmovies.R
+import br.com.altechno.sbmovies.adapters.MoviesGridAdapter
+import br.com.altechno.sbmovies.model.MovieSearch
+import br.com.altechno.sbmovies.ui.home.HomeViewModel
 import br.com.altechno.sbmovies.utils.movies
-import br.com.mrstecno.mymoviesimdb_test.adapters.MoviesGridAdapter
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(R.layout.fragment_search) {
 
-    private var waitingTime: Long = 500
+    private val homeViewModel: HomeViewModel by viewModels()
+
+    private lateinit var dialog: Dialog
+
+    private var waitingTime: Long = 800
     private var countDownTimer: CountDownTimer? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,7 +38,7 @@ class SearchFragment : Fragment() {
         searchButton.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(text: String): Boolean {
                 if (text.isNotEmpty()) {
-                    Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+                    homeViewModel.findMoviesSample(text)
                 }
 
                 return true
@@ -56,8 +55,14 @@ class SearchFragment : Fragment() {
 
                     override fun onFinish() {
                         Log.d("FINISHED", "DONE $text")
+
+                        val mvs = listOf<MovieSearch>()
+                        setupRecyclerViewMovies(mvs)
+
                         if (text.isNotEmpty()) {
-                            Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+                            homeViewModel.findMoviesSample(text)
+                        } else {
+                            showMessageAlert(text)
                         }
                     }
                 }
@@ -72,17 +77,65 @@ class SearchFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        setupRecyclerViewMovies()
+        setupRecyclerViewMovies(movies)
+
+        observerViewModels()
     }
 
-    private fun setupRecyclerViewMovies() {
+    private fun observerViewModels() {
+        homeViewModel.moviesLiveData.observe(viewLifecycleOwner, { mvs ->
+            setupRecyclerViewMovies(mvs)
+        })
+
+        homeViewModel.getIsLoading().observeForever { status ->
+            showLoading(status)
+        }
+
+        homeViewModel.getMessage().observeForever { message ->
+            if (!message.contains("Too many results.")) {
+                showMessageAlert(message)
+            } else {
+                val mv = listOf<MovieSearch>()
+                setupRecyclerViewMovies(mv)
+            }
+        }
+    }
+
+    private fun showLoading(statusLoading: Boolean) {
+        if (statusLoading) {
+            dialog = Dialog(requireContext())
+            if (!dialog.isShowing) {
+                dialog.setContentView(R.layout.loading)
+                dialog.window!!.setLayout(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                dialog.show()
+            }
+        } else {
+            if (dialog.isShowing) {
+                dialog.dismiss()
+            }
+        }
+    }
+
+    private fun showMessageAlert(msg: String) {
+        val txtMessage: TextView = view?.findViewById(R.id.txt_search_message)!!
+
+        txtMessage.text = msg
+    }
+
+    private fun setupRecyclerViewMovies(mvs: List<MovieSearch>) {
         val gridView: GridView = view?.findViewById(R.id.grid_view_movies)!!
 
-        gridView.adapter = MoviesGridAdapter(movies, requireContext()) { mv ->
+        gridView.adapter = MoviesGridAdapter(mvs, requireContext()) { mv ->
             val args = Bundle()
             args.putParcelable("movie", mv)
 
             this.findNavController().navigate(R.id.action_searchFragment_to_detailsFragment, args)
+
+            val searchButton: SearchView = requireView().findViewById(R.id.searchView)
+            searchButton.setQuery("", false)
         }
     }
 }
