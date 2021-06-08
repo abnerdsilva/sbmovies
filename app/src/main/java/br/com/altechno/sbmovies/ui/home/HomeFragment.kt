@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -104,19 +105,33 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 val args = Bundle()
                 args.putParcelable("movie", mv)
 
-            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
+                this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
+            }
+        } else {
+            recyclerView.visibility = View.INVISIBLE
+            view?.findViewById<TextView>(R.id.txt_series)!!.visibility = View.INVISIBLE
         }
     }
 
-    private fun setupRecyclerViewChannels() {
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_channels)!!
+    private fun setupRecyclerViewGames() {
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_games)!!
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MoviesAdapter(movies.sortedBy { it.Title }) { mv ->
-            val args = Bundle()
-            args.putParcelable("movie", mv)
+        val mvs = movies.filter { it.Type == "game" }.sortedBy { it.Title }
 
-            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
+        if(mvs.isNotEmpty()) {
+            recyclerView.visibility = View.VISIBLE
+            view?.findViewById<TextView>(R.id.txt_games)!!.visibility = View.VISIBLE
+
+            recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.adapter = MoviesAdapter(mvs) { mv ->
+                val args = Bundle()
+                args.putParcelable("movie", mv)
+
+                this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
+            }
+        } else {
+            recyclerView.visibility = View.INVISIBLE
+            view?.findViewById<TextView>(R.id.txt_games)!!.visibility = View.INVISIBLE
         }
     }
 
