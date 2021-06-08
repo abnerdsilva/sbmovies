@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import android.widget.TextView
 import br.com.altechno.sbmovies.R
 import br.com.altechno.sbmovies.model.MovieSearch
 import com.bumptech.glide.Glide
@@ -39,6 +40,16 @@ class MoviesGridAdapter(
         val movie = movies[position]
 
         val img = tview?.findViewById<ImageView>(R.id.img_movie)
+        val title = tview?.findViewById<TextView>(R.id.txt_movie_title)
+        val type = tview?.findViewById<TextView>(R.id.txt_movie_type)
+
+        var sizeTitle = 16
+        if (movie.Title!!.length < sizeTitle) {
+            sizeTitle = movie.Title.length
+        }
+
+        title?.let { it.text = movie.Title.substring(0, sizeTitle) }
+        type?.let { it.text = movie.Type }
 
         Glide.with(tview!!)
             .load(movie.Poster)
