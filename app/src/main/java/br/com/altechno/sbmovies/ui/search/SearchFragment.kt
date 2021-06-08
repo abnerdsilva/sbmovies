@@ -84,7 +84,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private fun observerViewModels() {
         homeViewModel.moviesLiveData.observe(viewLifecycleOwner, { mvs ->
-            setupRecyclerViewMovies(mvs)
+            setupRecyclerViewMovies(mvs.sortedByDescending { it.Poster })
         })
 
         homeViewModel.getIsLoading().observeForever { status ->
@@ -120,22 +120,26 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun showMessageAlert(msg: String) {
-        val txtMessage: TextView = view?.findViewById(R.id.txt_search_message)!!
+        view?.let {
+            val txtMessage: TextView = requireView().findViewById(R.id.txt_search_message)!!
 
-        txtMessage.text = msg
+            txtMessage.text = msg
+        }
     }
 
     private fun setupRecyclerViewMovies(mvs: List<MovieSearch>) {
-        val gridView: GridView = view?.findViewById(R.id.grid_view_movies)!!
+        view?.let {
+            val gridView: GridView = requireView().findViewById(R.id.grid_view_movies)!!
 
-        gridView.adapter = MoviesGridAdapter(mvs, requireContext()) { mv ->
-            val args = Bundle()
-            args.putParcelable("movie", mv)
+            gridView.adapter = MoviesGridAdapter(mvs, requireContext()) { mv ->
+                val args = Bundle()
+                args.putParcelable("movie", mv)
 
-            this.findNavController().navigate(R.id.action_searchFragment_to_detailsFragment, args)
+                this.findNavController().navigate(R.id.action_searchFragment_to_detailsFragment, args)
 
-            val searchButton: SearchView = requireView().findViewById(R.id.searchView)
-            searchButton.setQuery("", false)
+                val searchButton: SearchView = requireView().findViewById(R.id.searchView)
+                searchButton.setQuery("", false)
+            }
         }
     }
 }
