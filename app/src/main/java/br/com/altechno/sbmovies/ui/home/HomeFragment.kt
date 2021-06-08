@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,12 +33,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         setupRecyclerViewMovies()
-        setupRecyclerViewChannels()
+        setupRecyclerViewSeries()
+        setupRecyclerViewGames()
 
         observerViewModels()
 
         if (movies.isEmpty()) {
-            homeViewModel.findMoviesSample("rambo")
+            val listMovies = listOf<String>("rambo", "avengers", "marvel")
+            homeViewModel.findMoviesSample(listMovies.random())
         }
     }
 
@@ -53,7 +56,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
             setupRecyclerViewMovies()
-            setupRecyclerViewChannels()
+            setupRecyclerViewSeries()
+            setupRecyclerViewGames()
         })
 
         homeViewModel.getIsLoading().observeForever { status ->
@@ -68,24 +72,66 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun setupRecyclerViewMovies() {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_movies)!!
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MoviesAdapter(movies) { mv ->
-            val args = Bundle()
-            args.putParcelable("movie", mv)
+        val mvs = movies.filter { it.Type == "movie" }.sortedBy { it.Title }
 
-            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
+        if (mvs.isNotEmpty()) {
+            recyclerView.visibility = View.VISIBLE
+            view?.findViewById<TextView>(R.id.txt_movies)!!.visibility = View.VISIBLE
+
+            recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.adapter = MoviesAdapter(mvs) { mv ->
+                val args = Bundle()
+                args.putParcelable("movie", mv)
+
+                this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
+            }
+        } else {
+            recyclerView.visibility = View.INVISIBLE
+            view?.findViewById<TextView>(R.id.txt_movies)!!.visibility = View.INVISIBLE
         }
     }
 
-    private fun setupRecyclerViewChannels() {
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_channels)!!
+    private fun setupRecyclerViewSeries() {
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_series)!!
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MoviesAdapter(movies.sortedBy { it.Title }) { mv ->
-            val args = Bundle()
-            args.putParcelable("movie", mv)
+        val mvs = movies.filter { it.Type == "series" }.sortedBy { it.Title }
 
-            this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
+        if (mvs.isNotEmpty()) {
+            recyclerView.visibility = View.VISIBLE
+            view?.findViewById<TextView>(R.id.txt_series)!!.visibility = View.VISIBLE
+
+            recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.adapter = MoviesAdapter(mvs) { mv ->
+                val args = Bundle()
+                args.putParcelable("movie", mv)
+
+                this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
+            }
+        } else {
+            recyclerView.visibility = View.INVISIBLE
+            view?.findViewById<TextView>(R.id.txt_series)!!.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setupRecyclerViewGames() {
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_games)!!
+
+        val mvs = movies.filter { it.Type == "game" }.sortedBy { it.Title }
+
+        if(mvs.isNotEmpty()) {
+            recyclerView.visibility = View.VISIBLE
+            view?.findViewById<TextView>(R.id.txt_games)!!.visibility = View.VISIBLE
+
+            recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.adapter = MoviesAdapter(mvs) { mv ->
+                val args = Bundle()
+                args.putParcelable("movie", mv)
+
+                this.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, args)
+            }
+        } else {
+            recyclerView.visibility = View.INVISIBLE
+            view?.findViewById<TextView>(R.id.txt_games)!!.visibility = View.INVISIBLE
         }
     }
 
