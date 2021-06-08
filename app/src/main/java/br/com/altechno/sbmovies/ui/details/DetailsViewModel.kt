@@ -19,7 +19,7 @@ class DetailsViewModel: ViewModel() {
     private val isLoading = MutableLiveData<Boolean>()
     private val message = MutableLiveData<String>()
 
-    fun findMovie(title: String) {
+    fun findMovie(title: String, type: String, id: String) {
         isLoading.value = true
         message.value = ""
 
@@ -28,8 +28,13 @@ class DetailsViewModel: ViewModel() {
                 val apiKey = appdotenv["SECRET_KEY"]
 
                 val response = async {
-                    RetrofitInitializer().movieService()
-                        .findMovie(apiKey, title)
+                    if (id == "") {
+                        RetrofitInitializer().movieService()
+                            .findMovie(apiKey, title, type)
+                    } else {
+                        RetrofitInitializer().movieService()
+                            .findMovieByID(apiKey, id)
+                    }
                 }
                 val list = response.await()
 

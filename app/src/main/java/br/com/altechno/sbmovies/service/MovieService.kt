@@ -18,5 +18,12 @@ interface MovieService {
     fun findMovie(
         @Query("apiKey") key: String,
         @Query("t") title: String,
+        @Query("type") type: String,
+    ): Call<Movie>
+
+    @GET("/")
+    fun findMovieByID(
+        @Query("apiKey") key: String,
+        @Query("i") id: String,
     ): Call<Movie>
 }
