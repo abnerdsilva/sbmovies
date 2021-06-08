@@ -66,6 +66,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
             Glide.with(requireView())
                 .load(movie.Poster)
+                .placeholder(R.drawable.sem_imagem)
                 .centerInside()
                 .into(poster)
         })

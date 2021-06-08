@@ -32,7 +32,7 @@ class MoviesAdapter(
 
         Glide.with(holder.itemView)
             .load(movie.Poster)
-            .placeholder(R.drawable.ic_launcher_foreground)
+            .placeholder(R.drawable.sem_imagem)
             .centerCrop()
             .into(holder.image)
 

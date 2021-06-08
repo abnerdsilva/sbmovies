@@ -42,7 +42,7 @@ class MoviesGridAdapter(
 
         Glide.with(tview!!)
             .load(movie.Poster)
-            .placeholder(R.drawable.ic_launcher_foreground)
+            .placeholder(R.drawable.sem_imagem)
             .centerCrop()
             .into(img!!)
 
