@@ -66,6 +66,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
             Glide.with(requireView())
                 .load(movie.Poster)
+                .placeholder(R.drawable.sem_imagem)
                 .centerInside()
                 .into(poster)
         })
@@ -78,7 +79,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             showMessageAlert(message)
         }
 
-        movieSearch.Title?.let { detailsViewModel.findMovie(it) }
+        movieSearch.imdbID?.let {
+            detailsViewModel.findMovie(it, movieSearch.Type!!, movieSearch.imdbID!!)
+        }
     }
 
     private fun showLoading(statusLoading: Boolean) {
