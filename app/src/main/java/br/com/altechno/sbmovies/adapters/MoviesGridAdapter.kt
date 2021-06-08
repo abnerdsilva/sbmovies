@@ -1,4 +1,4 @@
-package br.com.mrstecno.mymoviesimdb_test.adapters
+package br.com.altechno.sbmovies.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,12 +11,12 @@ import br.com.altechno.sbmovies.model.MovieSearch
 import com.bumptech.glide.Glide
 
 class MoviesGridAdapter(
-    val movies: List<MovieSearch>,
-    val context: Context,
+    private val movies: List<MovieSearch>,
+    private val context: Context,
     val listener: (MovieSearch) -> Unit
 ) : BaseAdapter() {
 
-    val layoutInflator = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val layoutInflator = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getCount(): Int {
         return movies.size
